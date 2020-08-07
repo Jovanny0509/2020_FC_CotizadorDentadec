@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css?family=ABeeZee&display=swap');
+nav {
+  background-color: transparent !important;
+}
+hr { 
+	display: block; 
+	margin-before: 0.5em; 
+	margin-after: 0.5em; 
+	margin-start: auto; 
+	margin-end: auto; 
+	overflow: hidden;
+	border: 0.2em solid #CB4335;
+
+}
+.titulo{
+	font-family: 'ABeeZee', sans-serif;
+	font-size: 30px;
+}
+body{
+	background-color: #e0e0e0;
+}
+#datosCliente{
+	margin: 5px;
+}
+#datosCotizacion{
+	padding-top: 10px;
+}
+table{
+	table-layout: fixed;
+	width: 100%;   
+}
+th,td{
+    border-width: 5px;
+    word-wrap: break-word;
+}
+#imprimir{
+	display: none;
+}
+
+@media (max-width: 500px) {
+	img#firmacarLogo{
+		width: 110px;
+		height: 40px;
+	}
+	img#dentadecLogo{
+		width: 100px;
+		height: 50px;
+	}
+}
