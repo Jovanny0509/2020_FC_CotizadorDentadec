@@ -40,6 +40,30 @@
             <input type="text" class="form-control" id="anticipo" placeholder="$ MXN + IVA"/>
           </div>
         </div>
+        <h6>Mensualidades: </h6><br>
+        <div class="form-row text-center">
+          <div class="form-check col-md-4">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" data-meses="12" name="mensualidades" value="0" checked="">12 meses
+            </label>
+          </div>
+          <div class="form-check col-md-4">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" data-meses="24" name="mensualidades" value="1">24 meses
+            </label>
+          </div>
+          <div class="form-check col-md-4">
+            <label class="form-check-label">
+              <input type="radio" id="precioProm" class="form-check-input" data-meses="36" name="mensualidades" value="2">36 meses
+            </label>
+          </div>
+          <div class="form-check col-md-4">
+            <label class="form-check-label">
+              <input type="radio" id="precioProm" class="form-check-input" data-meses="48" name="mensualidades" value="3">48 meses
+            </label>
+          </div>
+        </div>
+        <br>
         <h6>Tipo de equipo: </h6><br>
   			<div class="form-row text-center">
   				<div class="form-check col-md-4">
@@ -166,7 +190,7 @@
             <!--Información general-->
             <table class="table thead-dark table-bordered table-striped table-hover">
               <thead class="thead-dark">
-                  <th colspan="2" class="text-center">RESULTADO DE COTIZACIÓN</th>
+                  <th colspan="2" class="text-center">Cotización No. <span id="idCotizacion"></span></th>
               </thead>
               <tbody>
                 <tr>
