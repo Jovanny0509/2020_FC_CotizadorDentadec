@@ -152,6 +152,16 @@ $(document).ready(function(){
 				alert("Promocional "+porcentajeDescuento+"%");
 			}
 
+			var arrIds = [];
+			var length = 3; 
+
+			for(var count = 0; count < length; count++) {
+			    arrIds.push(Math.round((Math.random() * (10 - 1) + 1)));
+			}
+
+			$("#idCotizacion").html("");
+			$("#idCotizacion").html(arrIds[0]+""+arrIds[1]+""+arrIds[2]);
+
 			var precioEquipoCIVA       = Math.round(precioLista*1.16);
 			var precioEquipoCDescuento = Math.round(precioEquipoCIVA-precioEquipoCIVA*(porcentajeDescuento/100));
 			var descuentoTotal         = Math.round(precioEquipoCIVA-precioEquipoCDescuento);
@@ -167,7 +177,7 @@ $(document).ready(function(){
 			let tasa 				= 23.00; 	// Tasa de interés
 			let seguroFinanciado	= 1.00/100;	// Seguro Financiado
 			let comisionApertura	= 3.00/100;	// Comisión de Apertura
-			let tipoCambioDolarGen 	= 22.00; 	//Tipo de cambio genérico
+			let tipoCambioDolarGen 	= 21.00; 	//Tipo de cambio genérico
 
 			$("#campoDescuento").html(formatearMonto(porcentajeDescuento));
 			$("#precioEquipoConIVA").html(formatearMonto(precioEquipoCIVA));
@@ -197,11 +207,13 @@ $(document).ready(function(){
 			/* Monto a arrendar con IVA / sin IVA */
 			montoArrendarcIVA = (($("#montoEquipoIVA").val()*1.16-($("#montoEquipoIVA").val()*1.16*(porcentajeDescuento/100)))-$("#convertAnticipo").val()).toFixed(2);
 			$("#anticipoRentas").html($("#convertAnticipo").val());
+			$("#precioEquipoCDescuento").html(formatearMonto(montoArrendarcIVA));
 			$("#montoArrendarcIVA").html(formatearMonto(montoArrendarcIVA));
+			
 			montoArrendarsIVA =	montoArrendarcIVA/1.16;
 
 			/* Valor $ de comisión de Apertura & seguro Financiado */
-			var comAperturaDesg   = ($("#montoEquipoIVA").val()-$("#montoEquipoIVA").val()*(porcentajeDescuento/100))*comisionApertura;
+			var comAperturaDesg   = (($("#montoEquipoIVA").val()-$("#montoEquipoIVA").val()*(porcentajeDescuento/100))*comisionApertura).toFixed(2);
 			var segFinanciadoDesg = ((($("#montoEquipoIVA").val()-$("#montoEquipoIVA").val()*(porcentajeDescuento/100))*seguroFinanciado)/12).toFixed(2);
 			console.log(comAperturaDesg);
 			console.log(segFinanciadoDesg);
@@ -249,7 +261,8 @@ $(document).ready(function(){
 
 			/* Tabla Pago Inicial */
 			$(".estudioViabilidad").each(function(index){
-				$(this).html(formatearMonto(comAperturaDesg));
+				console.log((comAperturaDesg));
+				$(this).html(parseFloat(comAperturaDesg).toFixed(2));
 			});
 			$(".anticRentas").each(function(index){
 				$(this).html((convertAnticipo/1.16).toFixed(2));
@@ -278,10 +291,15 @@ $(document).ready(function(){
 			$(".valorResidual").html(valorResidualsIVA*100);
 			$(".valorComercial").html(formatearMonto(valorResidualsIVADesg));
 			
-			/* Tabla Arrendamiento Puro*/
-			var pagoMensualAux 	  	= (parseFloat(arrRentasMensuales[0])+parseFloat(segFinanciadoDesg)+parseFloat(arrIVAPagoMensual[0])).toFixed(2);
-			var pagoInicialTotalAux = (parseFloat(arrSubTotalPagoI[0])+parseFloat(arrSubTotalPagoIVA[0])).toFixed(2);
-			var totalMensualidades  = (parseFloat(pagoMensualAux)*(12-1)).toFixed(2);
+			/* Mensualidad seleccionada */
+			mensualidad = $("input[name='mensualidades']:checked").val();
+			numMeses    = $("input[name='mensualidades']:checked").attr("data-meses"); 
+			console.log(mensualidad);
+
+			/* Tabla Arrendamiento Puro */
+			var pagoMensualAux 	  	= (parseFloat(arrRentasMensuales[mensualidad])+parseFloat(segFinanciadoDesg)+parseFloat(arrIVAPagoMensual[mensualidad])).toFixed(2);
+			var pagoInicialTotalAux = (parseFloat(arrSubTotalPagoI[mensualidad])+parseFloat(arrSubTotalPagoIVA[mensualidad])).toFixed(2);
+			var totalMensualidades  = (parseFloat(pagoMensualAux)*(numMeses-1)).toFixed(2);
 			var pagoTotal 			= (parseFloat(totalMensualidades)+parseFloat(pagoInicialTotalAux)).toFixed(2);
 			var interesesTotales	= 0;
 			var interesTotalPagado  = 0;
